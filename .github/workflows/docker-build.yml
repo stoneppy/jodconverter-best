@@ -46,7 +46,12 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Debug vars
+        run: echo "DOCKER_USERNAME=${{ vars.DOCKER_USERNAME }}"
+
       - name: Build and push app image
+        env:
+          DOCKER_USER: ${{ vars.DOCKER_USERNAME }}
         uses: docker/build-push-action@v5
         with:
           context: .
