@@ -34,8 +34,8 @@ RUN dnf install -y \
 ENV JAVA_HOME=/usr/lib/jvm/jre-21
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
-# Copy local package if exists (use a placeholder to avoid COPY failure)
-COPY package/ /tmp/packages/
+# Copy local package if exists
+COPY package* /tmp/packages/
 
 # Install LibreOffice: use local package if available, otherwise download
 RUN LOCAL_PKG=$(find /tmp/packages -name "LibreOffice_${LIBREOFFICE_VERSION}_Linux_x86-64_rpm.tar.gz" 2>/dev/null | head -1) \
