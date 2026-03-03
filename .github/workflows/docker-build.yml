@@ -6,6 +6,7 @@ on:
 
 env:
   LIBREOFFICE_VERSION: "26.2.1"
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
 jobs:
   build-base:
@@ -28,7 +29,7 @@ jobs:
           push: true
           build-args: |
             LIBREOFFICE_VERSION=${{ env.LIBREOFFICE_VERSION }}
-          tags: ${{ secrets.DOCKER_USERNAME }}/libreoffice:${{ env.LIBREOFFICE_VERSION }}
+          tags: ${{ env.DOCKER_USERNAME }}/libreoffice:${{ env.LIBREOFFICE_VERSION }}
 
   build-app:
     name: Build App Image
@@ -51,5 +52,5 @@ jobs:
           push: true
           build-args: |
             BASE_VERSION=${{ env.LIBREOFFICE_VERSION }}
-            DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-          tags: ${{ secrets.DOCKER_USERNAME }}/jodconverter-rest:latest
+            DOCKER_USERNAME=${{ env.DOCKER_USERNAME }}
+          tags: ${{ env.DOCKER_USERNAME }}/jodconverter-rest:latest
