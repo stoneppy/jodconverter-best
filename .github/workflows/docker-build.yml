@@ -6,7 +6,6 @@ on:
 
 env:
   LIBREOFFICE_VERSION: "26.2.1"
-  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
 
 jobs:
   build-base:
@@ -21,6 +20,9 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Prepare package directory
+        run: mkdir -p package
+
       - name: Build and push base image
         uses: docker/build-push-action@v5
         with:
@@ -29,7 +31,7 @@ jobs:
           push: true
           build-args: |
             LIBREOFFICE_VERSION=${{ env.LIBREOFFICE_VERSION }}
-          tags: ${{ env.DOCKER_USERNAME }}/libreoffice:${{ env.LIBREOFFICE_VERSION }}
+          tags: ${{ vars.DOCKER_USERNAME }}/libreoffice:${{ env.LIBREOFFICE_VERSION }}
 
   build-app:
     name: Build App Image
@@ -52,5 +54,5 @@ jobs:
           push: true
           build-args: |
             BASE_VERSION=${{ env.LIBREOFFICE_VERSION }}
-            DOCKER_USERNAME=${{ env.DOCKER_USERNAME }}
-          tags: ${{ env.DOCKER_USERNAME }}/jodconverter-rest:latest
+            DOCKER_USERNAME=${{ vars.DOCKER_USERNAME }}
+          tags: ${{ vars.DOCKER_USERNAME }}/jodconverter-rest:latest
