@@ -60,4 +60,4 @@ jobs:
           build-args: |
             BASE_VERSION=${{ env.LIBREOFFICE_VERSION }}
             DOCKER_USERNAME=${{ vars.DOCKER_USERNAME }}
-          tags: ${{ vars.DOCKER_USERNAME }}/jodconverter-rest:latest
+          tags: ${{ vars.DOCKER_USERNAME }}/jodconverter-rest:${{ env.LIBREOFFICE_VERSION }}
